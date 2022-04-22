@@ -1,19 +1,34 @@
 import styled from "styled-components";
+import { BiCheckSquare } from "react-icons/bi";
+import { BiNote } from "react-icons/bi";
+import { BiUser } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
-    <FootWrap>
-      <Copyright>© 2022 Bits Inc. All Rights Reserved</Copyright>
-      <FootNav>
-        <Button>Terms</Button>
-        <Button>Privacy</Button>
-        <Button>About</Button>
-      </FootNav>
-    </FootWrap>
+    <Wrap>
+      <ListBtn to="/lists">
+        <BiNote size="1.5rem" />
+      </ListBtn>
+      <Divider />
+      <UserBtn to="profile">
+        <BiUser size="1.5rem" />
+      </UserBtn>
+      <Divider />
+      <DoneBtn to="/done">
+        <BiCheckSquare size="1.5rem" />
+      </DoneBtn>
+    </Wrap>
   );
 };
 
-const FootWrap = styled.div`
+const Divider = styled.div`
+  background-color: #28292c;
+  width: 1px;
+  height: 100%;
+`;
+
+const Wrap = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -21,34 +36,59 @@ const FootWrap = styled.div`
   position: relative;
   width: 100%;
   min-height: 3rem;
-  background-color: #172035;
-  margin: 0 auto;
-  font-family: sans-serif;
+  background-color: black;
   font-size: 0.75em;
-  color: gray;
+  color: lightgray;
 `;
 
-const Copyright = styled.div`
-  margin-right: 50px;
-`;
-
-const FootNav = styled.div`
-  /* padding-right: 50px; */
-`;
-
-const Button = styled.button`
-  padding: 0 25px 0 25px;
-  font-family: sans-serif;
-  font-size: 1em;
-  color: gray;
-  background: none;
+const ListBtn = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: lightgray;
   border: 0;
-  height: 25px;
+  height: 100%;
+  width: 7.5rem;
 
   :hover {
     color: #92e000;
     cursor: pointer;
     background-color: #101010;
-    height: 3rem;
+  }
+`;
+
+const UserBtn = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px 0 25px;
+  color: lightgray;
+  background: none;
+  border: 0;
+  height: 100%;
+  width: 7.5rem;
+
+  :hover {
+    color: #ff130c;
+    cursor: pointer;
+    background-color: #101010;
+  }
+`;
+
+const DoneBtn = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px 0 25px;
+  color: lightgray;
+  background: none;
+  border: 0;
+  height: 100%;
+  width: 7.5rem;
+
+  :hover {
+    color: #0bc2dd;
+    cursor: pointer;
+    background-color: #101010;
   }
 `;

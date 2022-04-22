@@ -1,4 +1,4 @@
-const { handleSignUp, handleSignIn } = require("./Handlers");
+const { handleSignUp, handleSignIn, handleNewList } = require("./Handlers");
 
 const express = require("express");
 const helmet = require("helmet");
@@ -15,6 +15,7 @@ app.use(express.json());
 //Endpoints
 app.post("/signup", handleSignUp);
 app.post("/signin", handleSignIn);
+app.post("/lists", handleNewList);
 
 app.listen(8000, () => {
   console.log("Listening on Port 8000");

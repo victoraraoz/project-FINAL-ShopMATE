@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { AiFillUnlock } from "react-icons/ai";
 import { AiTwotoneMail } from "react-icons/ai";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { useContext, useState } from "react";
-import bg3 from "../assets/bg3.jpg";
+import bg from "../assets/bg_signin.jpg";
 
 export const SignUp = () => {
   const history = useHistory();
@@ -23,8 +23,10 @@ export const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        history.push("/confirmation");
-        setUser(data.data);
+        if (data.message == "Success") {
+          history.push("/lists");
+          setUser(data.data);
+        }
       })
       .catch((err) => console.log(err.stack));
   };
@@ -72,7 +74,7 @@ export const SignUp = () => {
         {""}
         <Footer>
           Already a member?{" "}
-          <SignInBtn onClick={() => history.push("/signin")}>Sign In</SignInBtn>
+          <SignInBtn onClick={() => history.push("/")}>Sign In</SignInBtn>
         </Footer>
       </Form>
     </SignUpWrap>
@@ -87,9 +89,9 @@ const SignUpWrap = styled.div`
   flex: 1;
   width: 100%;
   height: 100vh;
-  background: url(${bg3});
+  background: url(${bg});
   background-color: black;
-  background-position-y: top;
+  background-position-y: center;
   background-position-x: center;
 `;
 
@@ -125,7 +127,7 @@ const SignInBtn = styled.button`
   border: 0rem;
   font-family: "Open Sans", sans-serif;
   :hover {
-    color: #92e000;
+    color: #ff5d18;
     cursor: pointer;
   }
 `;
@@ -155,7 +157,7 @@ const Input = styled.input`
   border-radius: 1rem;
   color: gray;
   :hover {
-    border: 1px solid #92e000;
+    border: 1px solid #ff130c;
   }
 
   ::placeholder {
@@ -185,8 +187,8 @@ const SignUpBtn = styled.button`
   font-family: "Open Sans", sans-serif;
 
   :hover {
-    background-color: #172035;
-    color: #92e000;
+    background-color: #202124;
+    /* color: #ff5d18; */
     cursor: pointer;
   }
 `;

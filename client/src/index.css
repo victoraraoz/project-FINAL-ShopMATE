@@ -2,10 +2,13 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  color: gray;
-  font-size: 6rem;
-  margin: 15rem;
-  background-color: #1f2125;
+  font-size: 1rem;
+  color: white;
+  background-image: url("./assets/bg_main.jpg");
+  background-position-x: center;
+  background-position-y: top;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 a {

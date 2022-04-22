@@ -9,7 +9,9 @@ export const AppProvider = ({ children }) => {
   const [password, setPassword] = useState("");
 
   return (
-    <AppContext.Provider value={{ user, email, password, setStatus, setUser }}>
+    <AppContext.Provider
+      value={{ status, user, email, password, setStatus, setUser }}
+    >
       {children}
     </AppContext.Provider>
   );
