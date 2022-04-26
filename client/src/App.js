@@ -9,63 +9,80 @@ import { ResetPsswd } from "./components/ResetPsswd";
 import { Lists } from "./components/Lists";
 import { Profile } from "./components/Profile";
 import { Done } from "./components/Done";
-import { AppContext } from "./AppContext";
 import { useContext } from "react";
-import bg from "./assets/bg_signin.jpg";
+import { AppContext } from "./AppContext";
+import Notepad from "./components/Notepad";
+
+// import bg from "./assets/bg_signin.jpg";
 import { COLORS } from "./Constants";
 
 function App() {
+  const {
+    status,
+    setStatus,
+    user,
+    setUser,
+    email,
+    setEmail,
+    password,
+    setPassword,
+  } = useContext(AppContext);
+
   return (
-    <GlobalContainer>
-      <BrowserRouter>
-        <GlobalStyles />
-        <Header />
+    <>
+      <Buffer />
+      <AppContainer>
+        <BrowserRouter>
+          <GlobalStyles />
+          <Header />
 
-        <Switch>
-          <Route exact path="/">
-            <SignIn />
-          </Route>
+          <Switch>
+            <Route exact path="/">
+              <SignIn />
+            </Route>
 
-          <Route exact path="/signup">
-            <SignUp />
-          </Route>
+            <Route exact path="/signup">
+              <SignUp />
+            </Route>
 
-          <Route exact path="/resetpsswd">
-            <ResetPsswd />
-          </Route>
+            <Route exact path="/resetpsswd">
+              <ResetPsswd />
+            </Route>
 
-          <Route exact path="/lists">
-            <Lists />
-          </Route>
+            <Route exact path="/lists">
+              <Lists />
+            </Route>
 
-          <Route exact path="/profile">
-            <Profile />
-          </Route>
+            <Route exact path="/profile">
+              <Profile />
+            </Route>
 
-          <Route exact path="/done">
-            <Done />
-          </Route>
-        </Switch>
-
-        <Footer />
-      </BrowserRouter>
-    </GlobalContainer>
+            <Route exact path="/done">
+              <Done />
+            </Route>
+          </Switch>
+          {user ? <Footer /> : <></>}
+        </BrowserRouter>
+      </AppContainer>
+    </>
   );
 }
 
-const GlobalContainer = styled.div`
+const Buffer = styled.div`
+  width: 1px;
+  height: 1rem;
+`;
+
+const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   /* justify-content: space-between; */
   width: 22.5rem;
   height: 41.5rem;
   margin: 0px auto;
-
   border: 1px solid black;
-  background: url(${bg});
-  background-position-x: left;
-  background-position-y: center;
-  background-size: cover;
+  border-radius: 0.75rem 0.75rem 1.5rem 1.5rem;
+  background: #1a1a1a;
 `;
 
 export default App;

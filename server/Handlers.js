@@ -2,25 +2,70 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
 
+const bcrypt = require("bcrypt");
+
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
 
+const addNewList = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    console.log("TRY entered");
+    await client.connect();
+
+    const db = client.db("shopmate");
+    await db
+      .collection("users")
+      .updateOne(
+        { email: req.body.email },
+        { $push: { lists: { name: req.body.name, items: [] } } }
+      );
+
+    res.status(200).json({ status: 200, message: "Success" });
+  } catch (err) {
+    res.status(500).json({ status: 500, message: err.stack });
+    console.log(err.stack);
+  }
+  client.close();
+};
+
+const addNewItemToList = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const db = client.db("shopmate");
+    await db
+      .collection("users")
+      .updateOne(
+        { email: req.body.email, "lists.name": req.body.list },
+        { $push: { "lists.$.items": { $each: [req.body.name], $position: 0 } } }
+      );
+
+    res.status(200).json({ status: 200, message: "Success" });
+  } catch (err) {
+    res.status(500).json({ status: 500, message: err.stack });
+    console.log(err.stack);
+  }
+  client.close();
+};
+
 const handleSignUp = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
+
   try {
     console.log("TRY entered");
     const { email, password, confirmPassword } = req.body;
-
-    if (password == confirmPassword && req.body.value.includes("@")) {
+    console.log(email);
+    if (password === confirmPassword && email.includes("@")) {
       await client.connect();
-      console.log("CONNECTED");
 
-      const db = client.db("bits");
-      await db
-        .collection("users")
-        .insertOne({ email, password, confirmPassword });
+      const db = client.db("shopmate");
+      await db.collection("users").insertOne({ email, password, lists: [] });
 
       res
         .status(200)
@@ -43,7 +88,7 @@ const handleSignIn = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db("bits");
+    const db = client.db("shopmate");
     let query = { email: req.body.email, password: req.body.password };
     const result = await db.collection("users").findOne(query);
     if (result) {
@@ -59,13 +104,13 @@ const handleSignIn = async (req, res) => {
   }
 };
 
-const handleNewList = async (re, res) => {
+const handleNewPost = async (re, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db("bits");
+    const db = client.db("shopmate");
     let query = { email: req.body.email, password: req.body.password };
-    const result = await db.collection("lists").findOne(query);
+    const result = await db.collection("notepad").findOne(query);
     if (result) {
       res.status(201).json({ status: 201, data: result });
     } else {
@@ -79,4 +124,12 @@ const handleNewList = async (re, res) => {
   }
 };
 
-module.exports = { handleSignIn, handleSignUp, handleNewList };
+const handleDone = () => {};
+
+module.exports = {
+  handleSignIn,
+  handleSignUp,
+  handleNewPost,
+  addNewList,
+  addNewItemToList,
+};

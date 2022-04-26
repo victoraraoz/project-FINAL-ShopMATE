@@ -12,13 +12,22 @@ export const Header = () => {
   // const { user, setUser } = useContext(AppContext);
 
   return (
-    <HeadWrap>
-      <Logo src={logo} />
-      <AppName>Shop</AppName>
-      <Bold>Mate</Bold>
-    </HeadWrap>
+    <>
+      <HeadWrap>
+        <Logo src={logo} />
+        <AppName>Shop</AppName>
+        <Bold>Mate</Bold>
+      </HeadWrap>
+      <Cap />
+    </>
   );
 };
+
+const Cap = styled.div`
+  background: #28292c;
+  width: 100%;
+  height: 1px;
+`;
 
 const HeadWrap = styled.div`
   display: flex;
@@ -27,7 +36,8 @@ const HeadWrap = styled.div`
   align-items: center;
   width: 100%;
   min-height: 3.5rem;
-  background-color: black;
+  background-color: #070707;
+  border-radius: 0.75rem 0.75rem 0rem 0rem;
 `;
 
 const Logo = styled.img`
@@ -38,16 +48,16 @@ const Logo = styled.img`
 
 const AppName = styled.div`
   color: whitesmoke;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 300;
-  margin-left: 0.5rem;
+  margin-left: 0.75rem;
   /* text-transform: uppercase; */
 `;
 
 const Bold = styled.div`
   color: whitesmoke;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
   font-style: italic;
-  /* text-transform: uppercase; */
+  text-transform: uppercase;
 `;

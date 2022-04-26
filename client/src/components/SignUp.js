@@ -1,26 +1,33 @@
 import styled from "styled-components";
+import { BiUser } from "react-icons/bi";
 import { AiFillUnlock } from "react-icons/ai";
 import { AiTwotoneMail } from "react-icons/ai";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { useContext, useState } from "react";
-import bg from "../assets/bg_signin.jpg";
+// import bg from "../assets/bg_signin.jpg";
 
 export const SignUp = () => {
   const history = useHistory();
-  const { user, email, password, setStatus, setUser } = useContext(AppContext);
+  const { user, username, email, password, setStatus, setUser } =
+    useContext(AppContext);
   const [formData, setFormData] = useState({});
 
   const updateData = (inputField, inputValue) => {
     setFormData({ ...formData, [inputField]: inputValue });
   };
 
-  const handleSubmit = () => {
-    fetch("/signup", {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
-    })
+    };
+
+    console.log(requestOptions);
+
+    fetch("/signup", requestOptions)
       .then((res) => res.json())
       .then((data) => {
         if (data.message == "Success") {
@@ -35,7 +42,19 @@ export const SignUp = () => {
     <SignUpWrap>
       <Form onSubmit={handleSubmit}>
         <FormBody>
-          <h1>Sign Up</h1>
+          <Title>Sign Up</Title>
+          <InputSection>
+            <BiUser />
+            <Input
+              name="username"
+              type="username"
+              placeholder="Username"
+              onChange={(e) => {
+                updateData("username", e.target.value);
+              }}
+            />
+          </InputSection>
+          <Divider />
           <InputSection>
             <AiTwotoneMail />
             <Input
@@ -53,7 +72,7 @@ export const SignUp = () => {
             <Input
               name="password"
               type="password"
-              placeholder="Enter a password"
+              placeholder="Password"
               onChange={(e) => {
                 updateData("password", e.target.value);
               }}
@@ -63,9 +82,12 @@ export const SignUp = () => {
           <InputSection>
             <AiFillUnlock />
             <Input
-              name="confirmpassword"
+              name="confirmPassword"
               type="password"
               placeholder="Confirm password"
+              onChange={(e) => {
+                updateData("confirmPassword", e.target.value);
+              }}
             />
           </InputSection>
 
@@ -74,7 +96,7 @@ export const SignUp = () => {
         {""}
         <Footer>
           Already a member?{" "}
-          <SignInBtn onClick={() => history.push("/")}>Sign In</SignInBtn>
+          <SignInBtn onClick={() => history.push("/")}>Sign In!</SignInBtn>
         </Footer>
       </Form>
     </SignUpWrap>
@@ -86,26 +108,20 @@ const SignUpWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1;
   width: 100%;
   height: 100vh;
-  background: url(${bg});
   background-color: black;
-  background-position-y: center;
-  background-position-x: center;
+  border-radius: 0rem 0rem 1.5rem 1.5rem;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: whitesmoke;
   padding: 2rem;
-  border: 1px solid lightgray;
-  border-radius: 2rem;
-  box-shadow: 0rem 1rem 3rem -0.5rem #373a42;
   width: 20rem;
-  /* height: 32rem; */
+  width: 90%;
+  border-radius: 1rem;
 `;
 
 const FormBody = styled.div`
@@ -122,14 +138,13 @@ const FormBody = styled.div`
   }
 `;
 
-const SignInBtn = styled.button`
-  background: none;
-  border: 0rem;
-  font-family: "Open Sans", sans-serif;
-  :hover {
-    color: #ff5d18;
-    cursor: pointer;
-  }
+const Title = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2.25rem;
+  font-size: 2rem;
+  font-weight: 300;
+  color: whitesmoke;
 `;
 
 const Label = styled.div`
@@ -148,24 +163,25 @@ const InputSection = styled.div`
 `;
 
 const Input = styled.input`
-  background-color: white;
+  background-color: #28292c;
   width: 12.5rem;
   height: 2rem;
   padding-left: 1rem;
   margin-left: 1rem;
-  border: 1px solid white;
+  border: 0px solid white;
   border-radius: 1rem;
-  color: gray;
+  color: darkgray;
+  font-family: "Open Sans", sans-serif;
   :hover {
-    border: 1px solid #ff130c;
+    /* border: 1px solid #ff130c; */
   }
 
   ::placeholder {
     color: lightgray;
-    opacity: 1;
+    opacity: 0.5;
   }
   :focus {
-    border: 1px solid #92e000;
+    border: 1px solid #28292c;
   }
 `;
 
@@ -177,23 +193,22 @@ const Divider = styled.div`
 `;
 
 const SignUpBtn = styled.button`
-  background-color: #373a42;
+  background-color: #0f0f0f;
+  margin: 1rem 0rem;
   width: 100%;
   height: 2.5rem;
   border: 0rem;
   border-radius: 2rem;
-  color: white;
-  margin: 1rem 0rem;
+  color: gray;
   font-family: "Open Sans", sans-serif;
+  font-size: 1rem;
 
   :hover {
-    background-color: #202124;
-    /* color: #ff5d18; */
+    background-color: #ff130c;
+    color: white;
     cursor: pointer;
   }
 `;
-
-const Icon = styled.div``;
 
 const Button = styled.button`
   background: none;
@@ -207,4 +222,16 @@ const Footer = styled.div`
   width: 100%;
   font-size: 0.75rem;
   border: 0rem;
+  color: gray;
+`;
+
+const SignInBtn = styled.button`
+  background: none;
+  border: 0rem;
+  font-family: "Open Sans", sans-serif;
+  color: gray;
+  :hover {
+    color: whitesmoke;
+    cursor: pointer;
+  }
 `;

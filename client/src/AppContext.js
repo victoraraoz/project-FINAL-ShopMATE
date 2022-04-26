@@ -5,12 +5,24 @@ export const AppContext = createContext(null);
 export const AppProvider = ({ children }) => {
   const [status, setStatus] = useState(null);
   const [user, setUser] = useState(null);
+  const [username, setUsername] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <AppContext.Provider
-      value={{ status, user, email, password, setStatus, setUser }}
+      value={{
+        status,
+        setStatus,
+        user,
+        setUser,
+        username,
+        setUsername,
+        email,
+        setEmail,
+        password,
+        setPassword,
+      }}
     >
       {children}
     </AppContext.Provider>

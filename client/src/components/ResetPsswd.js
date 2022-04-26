@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { AiTwotoneMail } from "react-icons/ai";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const ResetPsswd = () => {
   const history = useHistory();
@@ -9,31 +9,26 @@ export const ResetPsswd = () => {
     <ResetWrap>
       <Form>
         <FormBody>
-          <h1>Reset Password</h1>
+          <Title>Reset Password</Title>
           <InputSection>
             <AiTwotoneMail />
             <Input name="e-mail" type="e-mail" placeholder="Enter your email" />
           </InputSection>
           <Divider />
 
-          <SignInButton onClick={() => history.push("/profile")}>
-            {/* formData={formData} handleClick={handleClick}  || onClick={() => handleClick()} ...inside the Button tag?  */}
-            SEND ME A LINK
-          </SignInButton>
+          <Reset onClick={() => history.push("/profile")}>SEND ME A LINK</Reset>
+          {/* what we want to do her is a fetch to verify if the email entered matches any in the database. If there i a match. it generates an email with a password reset. */}
         </FormBody>
         {""}
         <Footer>
-          <SOL onClick={() => history.push("/sol")}>Forgot email?</SOL>
-
-          <StartOver>
-            <a onClick={() => history.push("/")}>Start Over</a>
-          </StartOver>
+          <TheShameLane to="/signup">
+            Forgot email? Get a New Account! It's free!
+          </TheShameLane>
+          <StartOver to="/">Start Over</StartOver>
         </Footer>
         {""}
       </Form>
     </ResetWrap>
-
-    //form to sign in and sign up. create another component called 'SignUp.js'
   );
 };
 
@@ -42,22 +37,17 @@ const ResetWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1;
   width: 100%;
   height: 100vh;
-  background-color: #f2f3f2;
-  /* background-image: url("./assets/bg_signin.jpg"); */
+  background-color: black;
+  border-radius: 0rem 0rem 1.5rem 1.5rem;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: whitesmoke;
-  padding: 2rem;
-  /* border: 1px solid lightgray; */
-  border-radius: 1.5rem;
-  box-shadow: 0rem 2rem 8rem -0.5rem black;
+  padding: 2rem 1rem 1rem 2rem;
   width: 20rem;
   color: darkgray;
 `;
@@ -66,14 +56,6 @@ const FormBody = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  h1 {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 2.25rem;
-    font-size: 2rem;
-    font-weight: 300;
-    color: black;
-  }
 `;
 
 const InputSection = styled.div`
@@ -83,11 +65,20 @@ const InputSection = styled.div`
   align-self: flex-start;
 `;
 
+const Title = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2.25rem;
+  font-size: 2rem;
+  font-weight: 300;
+  color: whitesmoke;
+`;
+
 const Input = styled.input`
   background-color: white;
   width: 13rem;
   height: 2rem;
-  padding-left: 0.5rem;
+  padding-left: 1rem;
   margin-left: 1rem;
   border: 1px solid whitesmoke;
   border-radius: 1rem;
@@ -100,65 +91,60 @@ const Divider = styled.div`
   margin: 0.25rem 0rem 0.75rem 0rem;
 `;
 
-const SignInButton = styled.button`
+const Reset = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: lightgray;
-  width: 100%;
+
+  width: 93%;
   height: 2.5rem;
   border: 0rem;
   border-radius: 2rem;
-  color: white;
+  color: gray;
   margin-bottom: 1rem;
+  background: none;
 
   :hover {
-    background-color: black;
+    background-color: #0f0f0f;
     cursor: pointer;
+    color: white;
   }
 `;
 
-const Icon = styled.div``;
-
-const Button = styled.button`
-  background: none;
-`;
-
-const Footer = styled.button`
+const Footer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   font-size: 0.75rem;
-  background-color: whitesmoke;
-  border: 0rem;
 `;
 
-const StartOver = styled.div`
-  display: flex;
-  flex-direction: row;
-  color: gray;
-
-  a {
-    color: brown;
-    padding-left: 0.25rem;
-
-    :hover {
-      color: black;
-      cursor: pointer;
-    }
-  }
-`;
-
-const SOL = styled.button`
+const TheShameLane = styled(Link)`
   background: none;
   color: gray;
   border: 0rem;
   padding: 0.5rem 0rem;
+  text-decoration: none;
+  font-size: 0.75rem;
 
   :hover {
     cursor: pointer;
-    color: black;
-    font-weight: 300;
+    color: white;
+    font-size: 0.75rem;
+  }
+`;
+
+const StartOver = styled(Link)`
+  display: flex;
+  flex-direction: row;
+  color: whitesmoke;
+  background: none;
+  border: 0rem;
+  text-decoration: none;
+  color: gray;
+
+  :hover {
+    cursor: pointer;
+    color: white;
   }
 `;

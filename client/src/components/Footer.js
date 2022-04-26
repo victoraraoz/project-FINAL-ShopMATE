@@ -6,21 +6,37 @@ import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
-    <Wrap>
-      <ListBtn to="/lists">
-        <BiNote size="1.5rem" />
-      </ListBtn>
-      <Divider />
-      <UserBtn to="profile">
-        <BiUser size="1.5rem" />
-      </UserBtn>
-      <Divider />
-      <DoneBtn to="/done">
-        <BiCheckSquare size="1.5rem" />
-      </DoneBtn>
-    </Wrap>
+    <>
+      <Cap />
+      <Wrap>
+        <ListBtn to="/lists">
+          <BiNote size="1.5rem" />
+        </ListBtn>
+        <Divider />
+        <UserBtn to="profile">
+          <BiUser size="1.5rem" />
+        </UserBtn>
+        <Divider />
+        <DoneBtn to="/done">
+          <BiCheckSquare size="1.5rem" />
+        </DoneBtn>
+      </Wrap>
+    </>
   );
 };
+
+const E = styled.div`
+  display: none;
+  text-align: center;
+  color: gray;
+  padding: 1rem;
+`;
+
+const Cap = styled.div`
+  background: #28292c;
+  width: 100%;
+  height: 1px;
+`;
 
 const Divider = styled.div`
   background-color: #28292c;
@@ -36,9 +52,10 @@ const Wrap = styled.div`
   position: relative;
   width: 100%;
   min-height: 3rem;
-  background-color: black;
+  background-color: #070707;
   font-size: 0.75em;
   color: lightgray;
+  border-radius: 0rem 0rem 1.5rem 1.5rem;
 `;
 
 const ListBtn = styled(Link)`
@@ -47,8 +64,10 @@ const ListBtn = styled(Link)`
   align-items: center;
   color: lightgray;
   border: 0;
+  border-radius: 0rem 0rem 0rem 1.5rem;
   height: 100%;
   width: 7.5rem;
+  background: none;
 
   :hover {
     color: #92e000;
@@ -83,6 +102,7 @@ const DoneBtn = styled(Link)`
   color: lightgray;
   background: none;
   border: 0;
+  border-radius: 0rem 0rem 1.5rem 0rem;
   height: 100%;
   width: 7.5rem;
 

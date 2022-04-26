@@ -4,16 +4,12 @@ body {
   font-family: "Open Sans", sans-serif;
   font-size: 1rem;
   color: white;
-  background-image: url("./assets/bg_main.jpg");
+  /* background-image: url("./assets/bg_main5.jpg"); */
   background-position-x: center;
-  background-position-y: top;
+  background-position-y: center;
+  background-color: #1a1a1a;
   background-size: cover;
   background-repeat: no-repeat;
-}
-
-a {
-  color: white;
-}
-a:hover {
-  color: #ff5d18;
+  padding: 10rem;
+  height: 100vh;
 }

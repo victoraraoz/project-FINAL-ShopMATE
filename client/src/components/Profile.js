@@ -2,10 +2,19 @@ import styled from "styled-components";
 import { AppContext } from "../AppContext";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { setUser } from "react";
 
 export const Profile = () => {
-  const { user } = useContext(AppContext);
+  const {
+    status,
+    setStatus,
+    user,
+    setUser,
+    email,
+    setEmail,
+    password,
+    setPassword,
+  } = useContext(AppContext);
+
   const [formData, setFormData] = useState({});
   const history = useHistory();
 
@@ -14,10 +23,12 @@ export const Profile = () => {
   }
 
   const SignOut = (e) => {
-    if (e.target.value === "signout") {
-      setUser(null);
-      history.push("/");
-    }
+    console.log(e.target.value);
+
+    // if (e.target.value === "signout") {
+    setUser(null);
+    history.push("/");
+    // }
   };
 
   const handleSave = () => {
@@ -44,7 +55,7 @@ export const Profile = () => {
       <Username>
         <AccentRed />
         <SpacerClear />
-        {data.email}
+        {/* {data.email} */}
       </Username>
 
       <FormHeader>
@@ -52,10 +63,7 @@ export const Profile = () => {
         <Save>SAVE CHANGES</Save>
       </FormHeader>
       <Divider />
-      <Message>
-        Update username/email and enter your password. To modify your password,
-        enter it twice.
-      </Message>
+      <Message>Ignore password fiels if not to be modified.</Message>
 
       <Form onSubmit={handleSave}>
         <Label>Username</Label>
@@ -96,7 +104,7 @@ const Message = styled.div`
   color: #ff4a45;
   width: 100%;
   padding: 0rem 2rem;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   line-height: 1rem;
 `;
 
@@ -139,12 +147,15 @@ const SubHeader = styled.div`
 const Title = styled.div``;
 
 const SignOutBtn = styled.button`
-  display: flex;
-  align-items: center;
-  background: none;
+  /* display: flex; */
+  padding: 0.45rem;
+  /* align-items: center; */
   border: none;
+  border-radius: 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   color: white;
-  font-weight: 400;
+  background: none;
 
   :hover {
     cursor: pointer;
