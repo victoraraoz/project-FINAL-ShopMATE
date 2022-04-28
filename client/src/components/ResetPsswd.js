@@ -1,9 +1,22 @@
 import styled from "styled-components";
 import { AiTwotoneMail } from "react-icons/ai";
 import { Link, useHistory } from "react-router-dom";
+import { useState } from "react";
 
 export const ResetPsswd = () => {
   const history = useHistory();
+
+  const [formData, setFormData] = useState({});
+
+  const updateData = (inputField, inputValue) => {
+    setFormData({ ...formData, [inputField]: inputValue });
+  };
+
+  const Alert = () => {
+    if (updateData !== 0) {
+      return window.alert("Please fill in the form");
+    }
+  };
 
   return (
     <ResetWrap>
@@ -16,7 +29,9 @@ export const ResetPsswd = () => {
           </InputSection>
           <Divider />
 
-          <Reset onClick={() => history.push("/profile")}>SEND ME A LINK</Reset>
+          <Reset onClick={(() => history.push("/profile"), Alert)}>
+            SEND ME A LINK
+          </Reset>
           {/* what we want to do her is a fetch to verify if the email entered matches any in the database. If there i a match. it generates an email with a password reset. */}
         </FormBody>
         {""}

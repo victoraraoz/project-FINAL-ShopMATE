@@ -124,6 +124,33 @@ const handleNewPost = async (re, res) => {
   }
 };
 
+const updateUser = async () => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const db = client.db("shopmate");
+    await db.collection("users").updateMany(
+      {
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword,
+      }
+
+      // "lists.name": req.body.list
+      // { $push: { "lists.$.items": { $each: [req.body.name], $position: 0 } } }
+    );
+
+    res.status(200).json({ status: 200, message: "Success, User Updated" });
+  } catch (err) {
+    res.status(500).json({ status: 500, message: err.stack });
+    console.log(err.stack);
+  }
+  client.close();
+};
+
 const handleDone = () => {};
 
 module.exports = {
@@ -132,4 +159,5 @@ module.exports = {
   handleNewPost,
   addNewList,
   addNewItemToList,
+  updateUser,
 };

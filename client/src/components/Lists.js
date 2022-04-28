@@ -2,16 +2,16 @@ import styled, { ServerStyleSheet } from "styled-components";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../AppContext";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { BiBody, BiPlayCircle } from "react-icons/bi";
-import bg from "../assets/bg_main.jpg";
+// import bg from "../assets/bg_main.jpg";
 
 export const Lists = () => {
   const { user } = useContext(AppContext);
   const [inputValue, setInputValue] = useState("");
-  const [lists, setLists] = useState(user.lists ? user.lists : []);
+  const [lists, setLists] = useState(user ? user.lists : []);
   const [currentList, setCurrentList] = useState(
-    user.lists[0] ? user.lists[0] : []
+    !user ? [] : user.lists[0] ? user.lists[0] : []
   );
   const [newItem, setNewItem] = useState("");
   const history = useHistory();
@@ -31,9 +31,7 @@ export const Lists = () => {
       headers: { "Content-Type": "application/json" },
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
+      .then((data) => {})
       .catch((err) => {
         console.log(err.stack);
       });
@@ -41,7 +39,7 @@ export const Lists = () => {
 
   const createNewItem = (name) => {
     let listCopy = [...lists];
-    console.log(name);
+    // console.log(name);
     setLists(
       listCopy.map((list) => {
         // console.log(list);
@@ -62,14 +60,14 @@ export const Lists = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
       })
       .catch((err) => {
-        console.log(err.stack);
+        // console.log(err.stack);
       });
   };
 
-  console.log(lists, currentList);
+  console.log(lists);
 
   return (
     <Wrap>
@@ -85,17 +83,18 @@ export const Lists = () => {
         <Add onClick={createNewList}>+</Add>
       </Subheader>
       <Container>
-        {lists.map((list) => {
-          return (
-            <NewList
-              onClick={() => {
-                setCurrentList(list);
-              }}
-            >
-              {list.name}
-            </NewList>
-          );
-        })}
+        {lists &&
+          lists.map((list) => {
+            return (
+              <NewList
+                onClick={() => {
+                  setCurrentList(list);
+                }}
+              >
+                {list.name}
+              </NewList>
+            );
+          })}
       </Container>
       <Divider />
       {currentList.name ? (
@@ -123,6 +122,7 @@ export const Lists = () => {
           </CreateNew>
           <Container>
             {currentList.items.map((listItem) => {
+              // console.log(listItem);
               return <NewItem>{listItem}</NewItem>;
             })}
           </Container>
@@ -210,7 +210,6 @@ const Input = styled.input`
   background: none;
   font-size: 1.25rem;
   color: black;
-
   ::placeholder {
     color: black;
     font-size: 1rem;
@@ -228,7 +227,6 @@ const Add = styled.button`
   font-weight: 600;
   width: 2rem;
   height: 2rem;
-
   :hover {
     color: black;
     cursor: pointer;

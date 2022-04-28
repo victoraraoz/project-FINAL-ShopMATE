@@ -16,33 +16,38 @@ export const Profile = () => {
   } = useContext(AppContext);
 
   const [formData, setFormData] = useState({});
+  const [inputValue, setInputValue] = useState("");
   const history = useHistory();
+
+  const updateData = (inputField, inputValue) => {
+    setFormData({ ...formData, [inputField]: inputValue });
+  };
 
   if (!user) {
     history.push("/");
   }
 
-  const SignOut = (e) => {
-    console.log(e.target.value);
-
-    // if (e.target.value === "signout") {
-    setUser(null);
-    history.push("/");
-    // }
-  };
-
-  const handleSave = () => {
-    fetch("/signup", {
-      method: "POST",
+  const updateUserInfo = () => {
+    fetch("/updateuserinfo", {
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
       .then((res) => res.json())
       .then((data) => {
-        history.push("/confirmation");
+        alert("User information update succesfully");
         setUser(data.data);
       })
       .catch((err) => console.log(err.stack));
+  };
+
+  const SignOut = (e) => {
+    console.log(e.target.value);
+
+    if (e.target.value === "signout") {
+      setUser(null);
+      history.push("/");
+    }
   };
 
   return (
@@ -55,28 +60,64 @@ export const Profile = () => {
       <Username>
         <AccentRed />
         <SpacerClear />
-        {/* {data.email} */}
+        {user?.username}
       </Username>
 
       <FormHeader>
         <EditProfile>EDIT PROFILE</EditProfile>
-        <Save>SAVE CHANGES</Save>
       </FormHeader>
       <Divider />
       <Message>Ignore password fiels if not to be modified.</Message>
 
-      <Form onSubmit={handleSave}>
+      <Form onSubmit={updateUserInfo}>
         <Label>Username</Label>
-        <Input name="username" type="text" />
+        <Input
+          // value={inputValue}
+          name="username"
+          id="username"
+          type="text"
+          placeholder={user.username}
+          onChange={(e) => {
+            updateData("username", e.target.value);
+          }}
+        />
 
         <Label>Email</Label>
-        <Input name="email" type="email" />
+        <Input
+          // value={inputValue}
+          name="email"
+          id="email"
+          type="email"
+          placeholder={user.email}
+          onChange={(e) => {
+            updateData("email", e.target.value);
+          }}
+        />
 
         <Label>Password</Label>
-        <Input />
+        <Input
+          // value={inputValue}
+          name="password"
+          id="password"
+          type="password"
+          placeholder={user.password}
+          onChange={(e) => {
+            updateData("password", e.target.value);
+          }}
+        />
 
         <Label>Confirm Password</Label>
-        <Input />
+        <Input
+          // value={inputValue}
+          name="confirmpwd"
+          id="confirmpwd"
+          type="confirmpwd"
+          placeholder={user.confirmPassword}
+          onChange={(e) => {
+            updateData("confirmpwd", e.target.value);
+          }}
+        />
+        <Save type="submit">SAVE CHANGES</Save>
       </Form>
       <PgTab />
     </Wrap>
@@ -177,6 +218,7 @@ const Username = styled.div`
 
 const EditProfile = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
   color: #ff130c;
   font-size: 1rem;
@@ -217,6 +259,7 @@ const Save = styled.button`
   align-items: center;
   width: 7.5rem;
   height: 1.875rem;
+  margin: 0.5rem;
   color: white;
   font-weight: 600;
   background: none;

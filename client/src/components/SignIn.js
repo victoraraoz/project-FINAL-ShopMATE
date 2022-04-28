@@ -5,28 +5,32 @@ import { useState } from "react";
 import { AiFillUnlock } from "react-icons/ai";
 import { AiTwotoneMail } from "react-icons/ai";
 import { useHistory } from "react-router-dom";
-import bg from "../assets/bgmain.mp4";
 
 export const SignIn = () => {
-  const history = useHistory();
-  const [formData, setFormData] = useState({});
   const { user, setUser } = useContext(AppContext);
+  const [formData, setFormData] = useState({});
+  const history = useHistory();
 
   const updateData = (inputField, inputValue) => {
     setFormData({ ...formData, [inputField]: inputValue });
   };
 
+  //
+  // useEffect(
+  //   (e) => {
+  //     localStorage.setItem("email", "psw");
+  //   },
+  //   ["user"]
+  // );
+
   const checkEmail = (email) => {
-    let filter =
-      /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    //this line of code verifies emails. the first section checks the word before the @. It checks if it contains any lowercase letters from a to z, as well as any uppercase letters from A to Z and any integer from 0 to 9; as well as an _ a . and a dash (-). then the second section, again, checks to see if the word contains any lowercase, uppercase and integers as well as a dash. no underscore nore dots in this section as it should be followed by a dot as specified in the verification code (line 23:48) and it continues to check the last part of the email, one last time it looks for lowercase, uppercase and integers only; and the very last part scapes me. what's that 2 and 4 for?
+    let filter = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return filter.test(email);
   };
 
   const handleSignIn = (e) => {
     e.preventDefault();
 
-    console.log(formData);
     fetch("/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -39,6 +43,7 @@ export const SignIn = () => {
         if (data.status === 201) {
           console.log(data.data);
           setUser(data.data);
+          localStorage.setItem("user", JSON.stringify(data.data));
           history.push("/lists");
         } else {
           console.log("Error");
@@ -48,75 +53,61 @@ export const SignIn = () => {
   };
 
   return (
-    <>
-      {/* <video
-        autoPlay="autoPlay"
-        loop
-        muted
-        style={{
-          position: "absolute",
-          width: "100%",
-          left: "50%",
-          top: "50%",
-          height: "100%",
-          objectFit: "cover",
-          transform: "translate(-50%, -50%)",
-          zIndex: "-1",
+    <Wrap>
+      <Form
+        onSubmit={(e) => {
+          handleSignIn(e);
+          checkEmail(formData.email);
         }}
       >
-        <source src={bg} type="video/mp4" />
-      </video> */}
+        <FormBody>
+          <Title>Sign In</Title>
+          <Divider />
 
-      <Wrap>
-        <Form>
-          <FormBody>
-            <Title>Sign In</Title>
-            <Divider />
+          <InputSection>
+            <AiTwotoneMail />
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Email"
+              onChange={(e) => {
+                updateData("email", e.target.value);
+              }}
+            />
+          </InputSection>
+          <Divider />
 
-            <InputSection>
-              <AiTwotoneMail />
-              <Input
-                name="email"
-                type="email"
-                placeholder="Email"
-                onChange={(e) => {
-                  updateData("email", e.target.value);
-                }}
-              />
-            </InputSection>
-            <Divider />
+          <InputSection>
+            <AiFillUnlock />
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={(e) => {
+                updateData("password", e.target.value);
+              }}
+            />
+          </InputSection>
 
-            <InputSection>
-              <AiFillUnlock />
-              <Input
-                name="password"
-                type="password"
-                placeholder="Password"
-                onChange={(e) => {
-                  updateData("password", e.target.value);
-                }}
-              />
-            </InputSection>
+          <SignInButton>SIGN IN</SignInButton>
+        </FormBody>
+        <Error>Invalid username or password</Error>
 
-            <SignInButton onClick={handleSignIn}>SIGN IN</SignInButton>
-          </FormBody>
-          <Error>Invalid username or password</Error>
+        <ForgotPsswd onClick={() => history.push("/resetpsswd")}>
+          Forgot Password
+        </ForgotPsswd>
 
-          <ForgotPsswd onClick={() => history.push("/resetpsswd")}>
-            Forgot Password
-          </ForgotPsswd>
-
-          <SignUp>
-            Get an account!
-            <SignUpBtn onClick={() => history.push("/signup")}>
-              {/* here alternatively I could have use simply the Link tag and do a to="/signup"  */}
-              Sign Up!
-            </SignUpBtn>
-          </SignUp>
-        </Form>
-        <LoginFirst>Loging first!</LoginFirst>
-      </Wrap>
-    </>
+        <SignUp>
+          Get an account!
+          <SignUpBtn onClick={() => history.push("/signup")}>
+            Sign Up!
+          </SignUpBtn>
+        </SignUp>
+      </Form>
+      <LoginFirst>Loging first!</LoginFirst>
+    </Wrap>
   );
 };
 
@@ -151,7 +142,6 @@ const Wrap = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  border-radius: 0rem 0rem 1.5rem 1.5rem;
   background-color: black;
 `;
 

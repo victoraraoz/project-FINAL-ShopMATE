@@ -17,6 +17,12 @@ export const SignUp = () => {
     setFormData({ ...formData, [inputField]: inputValue });
   };
 
+  const Alert = (e) => {
+    if (e.target.value !== 0) {
+      return window.alert("Please fill in the form");
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const requestOptions = {
@@ -30,7 +36,7 @@ export const SignUp = () => {
     fetch("/signup", requestOptions)
       .then((res) => res.json())
       .then((data) => {
-        if (data.message == "Success") {
+        if (data.message === "Success") {
           history.push("/lists");
           setUser(data.data);
         }
@@ -91,7 +97,7 @@ export const SignUp = () => {
             />
           </InputSection>
 
-          <SignUpBtn>SIGN UP</SignUpBtn>
+          <SignUpBtn onClick={Alert}>SIGN UP</SignUpBtn>
         </FormBody>
         {""}
         <Footer>

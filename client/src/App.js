@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { SignIn } from "./components/SignIn";
@@ -11,10 +11,9 @@ import { Profile } from "./components/Profile";
 import { Done } from "./components/Done";
 import { useContext } from "react";
 import { AppContext } from "./AppContext";
-import Notepad from "./components/Notepad";
 
 // import bg from "./assets/bg_signin.jpg";
-import { COLORS } from "./Constants";
+// import { COLORS } from "./Constants";
 
 function App() {
   const {
