@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { AppContext } from "../AppContext";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+// import { Nav, Navbar, NavDropdown } from "react-bootstrap";
+
+// import "../index.css";
 
 export const Profile = () => {
   const {
@@ -42,12 +45,8 @@ export const Profile = () => {
   };
 
   const SignOut = (e) => {
-    console.log(e.target.value);
-
-    if (e.target.value === "signout") {
-      setUser(null);
-      history.push("/");
-    }
+    setUser(null);
+    history.push("/");
   };
 
   return (

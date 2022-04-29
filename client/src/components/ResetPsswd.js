@@ -55,7 +55,6 @@ const ResetWrap = styled.div`
   width: 100%;
   height: 100vh;
   background-color: black;
-  border-radius: 0rem 0rem 1.5rem 1.5rem;
 `;
 
 const Form = styled.form`
