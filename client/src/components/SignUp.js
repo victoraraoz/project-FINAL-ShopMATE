@@ -59,6 +59,7 @@ export const SignUp = () => {
               id="username"
               name="username"
               type="username"
+              autoCapitalize="Username"
               placeholder="Username"
               onChange={(e) => {
                 updateData("username", e.target.value);
@@ -72,6 +73,7 @@ export const SignUp = () => {
               id="email"
               name="email"
               type="email"
+              autoCapitalize="Email"
               placeholder="Enter a valid email"
               onChange={(e) => {
                 updateData("email", e.target.value);
@@ -86,6 +88,7 @@ export const SignUp = () => {
               name="password"
               type="password"
               placeholder="Password"
+              autoComplete="Password"
               onChange={(e) => {
                 updateData("password", e.target.value);
               }}
@@ -98,6 +101,7 @@ export const SignUp = () => {
               name="confirmPassword"
               type="password"
               placeholder="Confirm password"
+              autoComplete="Confirm password"
               onChange={(e) => {
                 updateData("confirmPassword", e.target.value);
               }}

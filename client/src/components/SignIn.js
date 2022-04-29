@@ -35,10 +35,14 @@ export const SignIn = () => {
           localStorage.setItem("user", JSON.stringify(data.data));
           history.push("/lists");
         } else {
-          console.log("Error");
+          window.alert(
+            "Opps! This is embarassin, something went wrong. Please try again"
+          );
         }
       })
-      .catch((err) => console.log(err.stack));
+      .catch((err) => {
+        console.log(err.stack);
+      });
   };
 
   return (
@@ -59,6 +63,7 @@ export const SignIn = () => {
               id="email"
               name="email"
               type="email"
+              autoComplete="Email"
               placeholder="Email"
               onChange={(e) => {
                 updateData("email", e.target.value);
@@ -73,6 +78,7 @@ export const SignIn = () => {
               id="password"
               name="password"
               type="password"
+              autoComplete="Password"
               placeholder="Password"
               onChange={(e) => {
                 updateData("password", e.target.value);

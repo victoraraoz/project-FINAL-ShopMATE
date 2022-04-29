@@ -44,7 +44,7 @@ export const Profile = () => {
       .catch((err) => console.log(err.stack));
   };
 
-  const SignOut = (e) => {
+  const SignOut = () => {
     setUser(null);
     localStorage.clear();
     history.push("/");
