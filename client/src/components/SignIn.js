@@ -18,7 +18,7 @@ export const SignIn = () => {
   const handleSignIn = (e) => {
     e.preventDefault();
     console.log(formData);
-    if (formData.length <= 2) return window.alert("Somethinig went wrong");
+    if (formData === "") return window.alert("FILL SOMETHING IN!");
 
     fetch("/signin", {
       method: "POST",
@@ -36,7 +36,7 @@ export const SignIn = () => {
           history.push("/lists");
         } else {
           window.alert(
-            "Opps! This is embarassin, something went wrong. Please try again"
+            "Opps! Looks like some information is missing. Please try again"
           );
         }
       })
@@ -86,7 +86,7 @@ export const SignIn = () => {
             />
           </InputSection>
 
-          <SignInButton>SIGN IN</SignInButton>
+          <BTN_signin>SIGN IN</BTN_signin>
         </FormBody>
 
         <Error>Invalid username or password</Error>
@@ -196,7 +196,7 @@ const Divider = styled.div`
   margin: 0.25rem 0rem 0.25rem 0rem;
 `;
 
-const SignInButton = styled.button`
+const BTN_signin = styled.button`
   background: #0f0f0f;
   margin: 1rem 0rem;
   width: 100%;

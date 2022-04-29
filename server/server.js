@@ -1,6 +1,6 @@
 const {
-  handleSignUp,
-  handleSignIn,
+  signUp,
+  signIn,
   addNewList,
   addNewItemToList,
   updateUser,
@@ -18,8 +18,8 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
 
-app.post("/signup", handleSignUp);
-app.post("/signin", handleSignIn);
+app.post("/signup", signUp);
+app.post("/signin", signIn);
 app.patch("/newlist", addNewList);
 app.patch("/addnewitem", addNewItemToList);
 app.patch("/updateuserifo", updateUser);

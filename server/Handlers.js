@@ -33,7 +33,7 @@ const options = {
 //   }
 // };
 
-const addNewList = async (req, res) => {
+const newList = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
 
   try {
@@ -55,7 +55,7 @@ const addNewList = async (req, res) => {
   client.close();
 };
 
-const addNewItemToList = async (req, res) => {
+const newItem = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
 
   try {
@@ -77,7 +77,7 @@ const addNewItemToList = async (req, res) => {
   client.close();
 };
 
-const handleSignUp = async (req, res) => {
+const signUp = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
 
   try {
@@ -91,7 +91,9 @@ const handleSignUp = async (req, res) => {
       await client.connect();
 
       const db = client.db("shopmate");
-      await db.collection("users").insertOne({ email, password, lists: [] });
+      await db
+        .collection("users")
+        .insertOne({ username, email, password, lists: [] });
 
       res.status(200).json({
         status: 200,
@@ -102,7 +104,8 @@ const handleSignUp = async (req, res) => {
       res.status(400).json({
         status: 400,
         data: { email },
-        message: "Error, something went wrong.",
+        message:
+          "UNABLE TO CONNECT TO NETWORK DU TO INACURATE FORM INFORMATION!.",
       });
     }
   } catch (err) {
@@ -112,7 +115,7 @@ const handleSignUp = async (req, res) => {
   }
 };
 
-const handleSignIn = async (req, res) => {
+const signIn = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
@@ -132,7 +135,7 @@ const handleSignIn = async (req, res) => {
   }
 };
 
-const handleNewPost = async (re, res) => {
+const newPost = async (re, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
@@ -179,13 +182,11 @@ const updateUser = async () => {
   client.close();
 };
 
-const handleDone = () => {};
-
 module.exports = {
-  handleSignIn,
-  handleSignUp,
-  handleNewPost,
-  addNewList,
-  addNewItemToList,
+  signIn,
+  signUp,
+  newPost,
+  newList,
+  newItem,
   updateUser,
 };

@@ -77,6 +77,7 @@ export const Profile = () => {
           id="username"
           type="text"
           placeholder={user.username}
+          autoComplete="Username"
           onChange={(e) => {
             updateData("username", e.target.value);
           }}
@@ -100,6 +101,7 @@ export const Profile = () => {
           name="password"
           id="password"
           type="password"
+          autoComplete="Password"
           placeholder={user.password}
           onChange={(e) => {
             updateData("password", e.target.value);
@@ -111,8 +113,9 @@ export const Profile = () => {
           // value={inputValue}
           name="confirmpwd"
           id="confirmpwd"
-          type="confirmpwd"
-          placeholder={user.confirmPassword}
+          type="password"
+          autoComplete="confirm psw"
+          placeholder="Enter same password as above to confirm"
           onChange={(e) => {
             updateData("confirmpwd", e.target.value);
           }}
@@ -191,10 +194,11 @@ const Title = styled.div`
 
 const SignOutBtn = styled.button`
   /* display: flex; */
-  padding: 0.45rem;
+  /* padding: 0.45rem; */
   /* align-items: center; */
   border: none;
   height: 100%;
+  width: 6rem;
   font-size: 0.75rem;
   color: black;
   background: none;
@@ -202,7 +206,7 @@ const SignOutBtn = styled.button`
   :hover {
     cursor: pointer;
     color: white;
-    background-color: #c0130c;
+    background-color: #d7130c;
   }
 `;
 

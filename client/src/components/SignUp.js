@@ -218,7 +218,8 @@ const SignUpBtn = styled.button`
   border-radius: 2rem;
   color: gray;
   font-family: "Open Sans", sans-serif;
-  font-size: 1rem;
+  font-size: 0.85rem;
+  font-weight: 800;
 
   :hover {
     background-color: #ff130c;
