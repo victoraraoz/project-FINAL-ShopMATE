@@ -9,11 +9,34 @@ const options = {
   useUnifiedTopology: true,
 };
 
+// userSchema.pre("save", function (next) {
+//   if (this.isModified("password")) {
+//     bcrypt.hash(this.password, 8, (err, hash) => {
+//       if (err) return next(err);
+
+//       this.password = hash;
+//       next();
+//     });
+//   }
+// });
+
+// const user = User.findOne({ email });
+// user.comparePassword();
+// userSchema.methods.comparePassword = async function (password) {
+//   if (!password) throw new Error("Password missing, cannot compare!");
+
+//   try {
+//     const result = await bcrypt.compare(password, this.password);
+//     return result;
+//   } catch (error) {
+//     console.log("Error while comparing passwords", error.message);
+//   }
+// };
+
 const addNewList = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
 
   try {
-    console.log("TRY entered");
     await client.connect();
 
     const db = client.db("shopmate");
@@ -58,18 +81,23 @@ const handleSignUp = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
 
   try {
-    console.log("TRY entered");
-    const { email, password, confirmPassword } = req.body;
-    console.log(email);
-    if (password === confirmPassword && email.includes("@")) {
+    const { username, email, password, confirmPassword } = req.body;
+    if (
+      (username.length >= 2 && username.length <= 16) ||
+      (password.length >= 8 && confirmPassword.length >= 16) ||
+      password === confirmPassword ||
+      email.includes("@")
+    ) {
       await client.connect();
 
       const db = client.db("shopmate");
       await db.collection("users").insertOne({ email, password, lists: [] });
 
-      res
-        .status(200)
-        .json({ status: 200, data: { email }, message: "Success" });
+      res.status(200).json({
+        status: 200,
+        data: { email },
+        message: "New user created succesfully",
+      });
     } else {
       res.status(400).json({
         status: 400,

@@ -6,37 +6,21 @@ import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
-    <>
-      <Cap />
-      <Wrap>
-        <ListBtn to="/lists">
-          <BiNote size="1.5rem" />
-        </ListBtn>
-        <Divider />
-        <UserBtn to="profile">
-          <BiUser size="1.5rem" />
-        </UserBtn>
-        <Divider />
-        <DoneBtn to="/done">
-          <BiCheckSquare size="1.5rem" />
-        </DoneBtn>
-      </Wrap>
-    </>
+    <Wrap>
+      <ListBtn to="/lists">
+        <BiNote size="1.5rem" />
+      </ListBtn>
+      <Divider />
+      <UserBtn to="profile">
+        <BiUser size="1.5rem" />
+      </UserBtn>
+      <Divider />
+      <DoneBtn to="/done">
+        <BiCheckSquare size="1.5rem" />
+      </DoneBtn>
+    </Wrap>
   );
 };
-
-const E = styled.div`
-  display: none;
-  text-align: center;
-  color: gray;
-  padding: 1rem;
-`;
-
-const Cap = styled.div`
-  background: #28292c;
-  width: 100%;
-  height: 1px;
-`;
 
 const Divider = styled.div`
   background-color: #28292c;

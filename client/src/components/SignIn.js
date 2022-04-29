@@ -15,21 +15,10 @@ export const SignIn = () => {
     setFormData({ ...formData, [inputField]: inputValue });
   };
 
-  //
-  // useEffect(
-  //   (e) => {
-  //     localStorage.setItem("email", "psw");
-  //   },
-  //   ["user"]
-  // );
-
-  const checkEmail = (email) => {
-    let filter = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    return filter.test(email);
-  };
-
   const handleSignIn = (e) => {
     e.preventDefault();
+    console.log(formData);
+    if (formData.length <= 2) return window.alert("Somethinig went wrong");
 
     fetch("/signin", {
       method: "POST",
@@ -57,7 +46,7 @@ export const SignIn = () => {
       <Form
         onSubmit={(e) => {
           handleSignIn(e);
-          checkEmail(formData.email);
+          // checkData(formData);
         }}
       >
         <FormBody>
@@ -93,19 +82,18 @@ export const SignIn = () => {
 
           <SignInButton>SIGN IN</SignInButton>
         </FormBody>
+
         <Error>Invalid username or password</Error>
-
-        <ForgotPsswd onClick={() => history.push("/resetpsswd")}>
-          Forgot Password
-        </ForgotPsswd>
-
-        <SignUp>
-          Get an account!
-          <SignUpBtn onClick={() => history.push("/signup")}>
-            Sign Up!
-          </SignUpBtn>
-        </SignUp>
       </Form>
+      <ForgotPsswd onClick={() => history.push("/resetpsswd")}>
+        Forgot Password
+      </ForgotPsswd>
+
+      <SignUp>
+        Get an account!
+        <SignUpBtn onClick={() => history.push("/signup")}>Sign Up!</SignUpBtn>
+      </SignUp>
+
       <LoginFirst>Loging first!</LoginFirst>
     </Wrap>
   );
@@ -143,6 +131,7 @@ const Wrap = styled.div`
   width: 100%;
   height: 100%;
   background-color: black;
+  border-radius: 0rem 0rem 1.5rem 1.5rem;
 `;
 
 const Form = styled.form`

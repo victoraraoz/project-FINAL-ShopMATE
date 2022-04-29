@@ -46,6 +46,7 @@ export const Profile = () => {
 
   const SignOut = (e) => {
     setUser(null);
+    localStorage.clear();
     history.push("/");
   };
 
@@ -184,23 +185,24 @@ const SubHeader = styled.div`
   padding: 0rem 1rem;
 `;
 
-const Title = styled.div``;
+const Title = styled.div`
+  font-weight: 900;
+`;
 
 const SignOutBtn = styled.button`
   /* display: flex; */
   padding: 0.45rem;
   /* align-items: center; */
   border: none;
-  border-radius: 0.85rem;
+  height: 100%;
   font-size: 0.75rem;
-  font-weight: 500;
-  color: white;
+  color: black;
   background: none;
 
   :hover {
     cursor: pointer;
-    color: yellow;
-    background-color: #ff4a45;
+    color: white;
+    background-color: #c0130c;
   }
 `;
 

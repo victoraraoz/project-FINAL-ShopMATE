@@ -46,12 +46,17 @@ export const SignUp = () => {
 
   return (
     <SignUpWrap>
-      <Form onSubmit={handleSubmit}>
+      <Form
+        onSubmit={(e) => {
+          handleSubmit(e);
+        }}
+      >
         <FormBody>
           <Title>Sign Up</Title>
           <InputSection>
             <BiUser />
             <Input
+              id="username"
               name="username"
               type="username"
               placeholder="Username"
@@ -64,6 +69,7 @@ export const SignUp = () => {
           <InputSection>
             <AiTwotoneMail />
             <Input
+              id="email"
               name="email"
               type="email"
               placeholder="Enter a valid email"
@@ -76,6 +82,7 @@ export const SignUp = () => {
           <InputSection>
             <AiFillUnlock />
             <Input
+              id="password"
               name="password"
               type="password"
               placeholder="Password"
@@ -97,7 +104,7 @@ export const SignUp = () => {
             />
           </InputSection>
 
-          <SignUpBtn onClick={Alert}>SIGN UP</SignUpBtn>
+          <SignUpBtn type="submit">SIGN UP</SignUpBtn>
         </FormBody>
         {""}
         <Footer>
@@ -117,6 +124,7 @@ const SignUpWrap = styled.div`
   width: 100%;
   height: 100vh;
   background-color: black;
+  border-radius: 0rem 0rem 1.5rem 1.5rem;
 `;
 
 const Form = styled.form`
