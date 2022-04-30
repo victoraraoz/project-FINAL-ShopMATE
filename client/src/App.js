@@ -75,7 +75,7 @@ const Buffer = styled.div`
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   width: 22.5rem;
   height: 41.5rem;
   margin: 0px auto;

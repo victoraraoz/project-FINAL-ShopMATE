@@ -71,17 +71,17 @@ export const Lists = () => {
 
   return (
     <Wrap>
-      <Subheader>
+      <CreateNew>
         <Input
           value={inputValue}
           type="text"
-          placeholder="NEW LIST"
+          placeholder="Create a new list"
           onChange={(e) => {
             setInputValue(e.target.value);
           }}
         />
         <Add onClick={createNewList}>+</Add>
-      </Subheader>
+      </CreateNew>
       <Container>
         {lists &&
           lists.map((list) => {
@@ -135,10 +135,6 @@ export const Lists = () => {
   );
 };
 
-const CreateNew = styled.div`
-  background-color: olive;
-`;
-
 const Container = styled.ul`
   background-color: none;
   height: 12.5rem;
@@ -153,6 +149,7 @@ const NewList = styled.li`
   align-items: center;
   padding-left: 1rem;
   height: 2.5rem;
+
   :hover {
     cursor: pointer;
     background-color: #0f0f0f;
@@ -193,27 +190,28 @@ const Wrap = styled.div`
   background-position-x: center;
 `;
 
-const Subheader = styled.div`
+const CreateNew = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-right: 1rem;
-  height: 2.5rem;
+  height: 3rem;
   background-color: #b7bc00;
 `;
 
 const Input = styled.input`
   width: 18rem;
-  height: 100%;
+  height: 2.75rem;
   border: 0;
   padding-left: 1rem;
-  background: none;
+
   font-size: 1.25rem;
   color: black;
+  background: #969600;
+
   ::placeholder {
     color: black;
     font-size: 1rem;
-    font-weight: 600;
   }
 `;
 

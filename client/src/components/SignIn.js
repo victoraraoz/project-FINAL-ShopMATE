@@ -18,31 +18,34 @@ export const SignIn = () => {
   const handleSignIn = (e) => {
     e.preventDefault();
     console.log(formData);
-    if (formData === "") return window.alert("FILL SOMETHING IN!");
 
-    fetch("/signin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-
-        if (data.status === 201) {
-          console.log(data.data);
-          setUser(data.data);
-          localStorage.setItem("user", JSON.stringify(data.data));
-          history.push("/lists");
-        } else {
-          window.alert(
-            "Opps! Looks like some information is missing. Please try again"
-          );
-        }
+    if (formData.value === "" || formData.value == null) {
+      return window.alert("FILL SOMETHING IN!");
+    } else {
+      fetch("/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       })
-      .catch((err) => {
-        console.log(err.stack);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+
+          if (data.status === 201) {
+            console.log(data.data);
+            setUser(data.data);
+            localStorage.setItem("user", JSON.stringify(data.data));
+            history.push("/lists");
+          } else {
+            window.alert(
+              "Opps! Looks like some information is missing. Please try again"
+            );
+          }
+        })
+        .catch((err) => {
+          console.log(err.stack);
+        });
+    }
   };
 
   return (

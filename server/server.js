@@ -1,10 +1,4 @@
-const {
-  signUp,
-  signIn,
-  addNewList,
-  addNewItemToList,
-  updateUser,
-} = require("./handlers");
+const { signUp, signIn, newList, newItem, updateUser } = require("./handlers");
 
 const express = require("express");
 const helmet = require("helmet");
@@ -20,9 +14,10 @@ app.use(express.json());
 
 app.post("/signup", signUp);
 app.post("/signin", signIn);
-app.patch("/newlist", addNewList);
-app.patch("/addnewitem", addNewItemToList);
-app.patch("/updateuserifo", updateUser);
+
+app.patch("/newlist", newList);
+app.patch("/addnewitem", newItem);
+app.patch("/updateuser", updateUser);
 
 app.listen(8000, () => {
   console.log("Listening on Port 8000");

@@ -30,8 +30,8 @@ export const Profile = () => {
     history.push("/");
   }
 
-  const updateUserInfo = () => {
-    fetch("/updateuserinfo", {
+  const updateUser = () => {
+    fetch("/updateuser", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
@@ -52,10 +52,10 @@ export const Profile = () => {
 
   return (
     <Wrap>
-      <SubHeader>
+      <Header>
         <Title>PROFILE</Title>
         <SignOutBtn onClick={SignOut}> SIGN OUT </SignOutBtn>
-      </SubHeader>
+      </Header>
 
       <Username>
         <AccentRed />
@@ -69,8 +69,8 @@ export const Profile = () => {
       <Divider />
       <Message>Ignore password fiels if not to be modified.</Message>
 
-      <Form onSubmit={updateUserInfo}>
-        <Label>Username</Label>
+      <Form onSubmit={updateUser}>
+        {/* <Label>Username</Label> */}
         <Input
           // value={inputValue}
           name="username"
@@ -83,7 +83,7 @@ export const Profile = () => {
           }}
         />
 
-        <Label>Email</Label>
+        {/* <Label>Email</Label> */}
         <Input
           // value={inputValue}
           name="email"
@@ -95,7 +95,7 @@ export const Profile = () => {
           }}
         />
 
-        <Label>Password</Label>
+        {/* <Label>Password</Label> */}
         <Input
           // value={inputValue}
           name="password"
@@ -108,14 +108,14 @@ export const Profile = () => {
           }}
         />
 
-        <Label>Confirm Password</Label>
+        {/* <Label>Confirm Password</Label> */}
         <Input
           // value={inputValue}
           name="confirmpwd"
           id="confirmpwd"
           type="password"
-          autoComplete="confirm psw"
-          placeholder="Enter same password as above to confirm"
+          autoComplete="confirm password"
+          placeholder="Comfirm password"
           onChange={(e) => {
             updateData("confirmpwd", e.target.value);
           }}
@@ -167,14 +167,14 @@ const SpacerClear = styled.div`
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #1a1a1a;
+  /* justify-content: flex-start;
+  align-items: center; */
+  background-color: yellow;
   width: 100%;
   height: 100%;
 `;
 
-const SubHeader = styled.div`
+const Header = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -254,6 +254,7 @@ const Input = styled.input`
   width: 80%;
   height: 2.5rem;
   padding-left: 1rem;
+  margin: 0.5rem 0rem;
   color: gray;
   font-size: 1rem;
 `;

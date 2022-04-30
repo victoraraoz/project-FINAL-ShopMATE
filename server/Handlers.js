@@ -160,19 +160,14 @@ const updateUser = async () => {
 
   try {
     await client.connect();
-
+    console.log("UpdateUSer component CONNECTED");
     const db = client.db("shopmate");
-    await db.collection("users").updateMany(
-      {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        confirmPassword: req.body.confirmPassword,
-      }
-
-      // "lists.name": req.body.list
-      // { $push: { "lists.$.items": { $each: [req.body.name], $position: 0 } } }
-    );
+    await db.collection("users").updateMany({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      confirmPassword: req.body.confirmPassword,
+    });
 
     res.status(200).json({ status: 200, message: "Success, User Updated" });
   } catch (err) {
