@@ -76,41 +76,41 @@ export const SignIn = () => {
           console.log(formData);
         }}
       >
-        <FormBody>
-          <Title>Sign In</Title>
-          <Divider />
+        <Title>Sign In</Title>
 
-          <InputSection>
-            <AiTwotoneMail />
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="Email"
-              placeholder="Email"
-              onChange={(e) => {
-                updateData("email", e.target.value);
-              }}
-            />
-          </InputSection>
-          <Divider />
+        <Divider />
 
-          <InputSection>
-            <AiFillUnlock />
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="Password"
-              placeholder="Password"
-              onChange={(e) => {
-                updateData("password", e.target.value);
-              }}
-            />
-          </InputSection>
+        <InputSection>
+          <AiTwotoneMail />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="Email"
+            placeholder="Email"
+            onChange={(e) => {
+              updateData("email", e.target.value);
+            }}
+          />
+        </InputSection>
 
-          <BTN_signin>SIGN IN</BTN_signin>
-        </FormBody>
+        <Divider />
+
+        <InputSection>
+          <AiFillUnlock />
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            autoComplete="Password"
+            placeholder="Password"
+            onChange={(e) => {
+              updateData("password", e.target.value);
+            }}
+          />
+        </InputSection>
+
+        <BTN_signin>SIGN IN</BTN_signin>
 
         <Error>Invalid username or password</Error>
       </Form>
@@ -171,14 +171,9 @@ const Form = styled.form`
   font-family: "Open Sans", sans-serif;
   color: gray;
   background: none;
-  padding: 2rem 2rem 1rem 2rem;
-  width: 90%;
-`;
-
-const FormBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* padding: 1rem; */
+  width: 85%;
+  /* background-color: brown; */
 `;
 
 const Title = styled.div`
@@ -194,13 +189,14 @@ const InputSection = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  align-self: flex-start;
+  width: 100%;
+  /* background-color: blanchedalmond; */
 `;
 
 const Input = styled.input`
-  background: #28292c;
-  width: 12.75rem;
-  height: 2rem;
+  /* background: #28292c; */
+  width: 100%;
+  height: 2.25rem;
   padding-left: 1rem;
   margin-left: 1rem;
   border: 0px;
@@ -211,12 +207,15 @@ const Input = styled.input`
     color: gray;
     opacity: 0.6;
   }
+  :focus {
+    /* border: 0px solid gray; */
+    outline: 0px;
+  }
 `;
 
 const Divider = styled.div`
   width: 100%;
-  height: 1px;
-  margin: 0.25rem 0rem 0.25rem 0rem;
+  height: 1rem;
 `;
 
 const BTN_signin = styled.button`
