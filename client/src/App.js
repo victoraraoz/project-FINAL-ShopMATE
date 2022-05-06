@@ -6,9 +6,10 @@ import { Footer } from "./components/Footer";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 import { ResetPsswd } from "./components/ResetPsswd";
-import { Lists } from "./components/Lists";
 import { Profile } from "./components/Profile";
-import { Done } from "./components/Done";
+import { Lists } from "./components/Lists";
+import { Notes } from "./components/Notes";
+import { ThankYou } from "./components/thankYou4REG";
 import { useContext } from "react";
 import { AppContext } from "./AppContext";
 
@@ -56,8 +57,12 @@ function App() {
               <Profile />
             </Route>
 
-            <Route exact path="/done">
-              <Done />
+            <Route exact path="/notes">
+              <Notes />
+            </Route>
+
+            <Route exact path="/thankyou">
+              <ThankYou />
             </Route>
           </Switch>
           {user ? <Footer /> : <></>}

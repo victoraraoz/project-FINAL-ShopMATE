@@ -123,23 +123,29 @@ export const Lists = () => {
           <Container>
             {currentList.items.map((listItem) => {
               // console.log(listItem);
-              return <NewItem>{listItem}</NewItem>;
+              return (
+                <NewItem>
+                  {listItem}
+                  <Dlt></Dlt>
+                </NewItem>
+              );
             })}
           </Container>
         </>
       ) : (
         <></>
       )}
-      <PgTab />
     </Wrap>
   );
 };
+
+const Dlt = styled.div``;
 
 const Container = styled.ul`
   background-color: none;
   height: 12.5rem;
   /* padding: 1rem; */
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const NewList = styled.li`
@@ -149,16 +155,20 @@ const NewList = styled.li`
   align-items: center;
   padding-left: 1rem;
   height: 2.5rem;
+  border: 0px;
 
-  :hover {
-    cursor: pointer;
-    background-color: #0f0f0f;
+  :active {
+    border: 0px;
   }
 `;
 
 const NewItem = styled.li`
+  display: flex;
+  align-items: center;
   height: 2rem;
   background: none;
+  padding-left: 1rem;
+  margin: 5px 0px 5px;
 `;
 
 const CurrentList = styled.div`
@@ -173,7 +183,7 @@ const CurrentList = styled.div`
 `;
 
 const Divider = styled.div`
-  background-color: #b7bc00;
+  background-color: #28292c;
   width: 100%;
   height: 1px;
 `;
@@ -185,9 +195,8 @@ const Wrap = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  background-color: black;
-  background-position-y: center;
-  background-position-x: center;
+  border: 1px solid #b7bc00;
+  background: black;
 `;
 
 const CreateNew = styled.div`
@@ -195,44 +204,47 @@ const CreateNew = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-right: 1rem;
-  height: 3rem;
+  min-height: 3rem;
   background-color: #b7bc00;
 `;
 
 const Input = styled.input`
   width: 18rem;
-  height: 2.75rem;
+  height: 2.5rem;
   border: 0;
+  border-radius: 0.5rem;
   padding-left: 1rem;
-
+  margin-left: 5px;
+  color: whitesmoke;
   font-size: 1.25rem;
-  color: black;
   background: #969600;
+
+  :focus {
+    outline: none;
+    cursor: pointer;
+  }
 
   ::placeholder {
     color: black;
-    font-size: 1rem;
   }
 `;
 
 const Add = styled.button`
-  background-color: red;
+  display: flex;
+  align-items: center;
+
   margin-left: 1rem;
   border: 0rem;
-  border-radius: 1.5rem;
+  border-radius: 2rem;
   color: white;
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 2rem;
   width: 2rem;
   height: 2rem;
-  :hover {
-    color: black;
-    cursor: pointer;
-  }
-`;
+  background-color: #abb000;
 
-const PgTab = styled.div`
-  width: 7.5rem;
-  height: 0.188rem;
-  background-color: #b7bc00;
+  :hover {
+    color: whitesmoke;
+    cursor: pointer;
+    background: #a1a600;
+  }
 `;

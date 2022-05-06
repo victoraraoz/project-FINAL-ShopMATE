@@ -2,9 +2,6 @@ import styled from "styled-components";
 import { AppContext } from "../AppContext";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-// import { Nav, Navbar, NavDropdown } from "react-bootstrap";
-
-// import "../index.css";
 
 export const Profile = () => {
   const {
@@ -18,7 +15,10 @@ export const Profile = () => {
     setPassword,
   } = useContext(AppContext);
 
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    username: user.username,
+    email: user.email,
+  });
   const [inputValue, setInputValue] = useState("");
   const history = useHistory();
 
@@ -30,7 +30,8 @@ export const Profile = () => {
     history.push("/");
   }
 
-  const updateUser = () => {
+  const updateUser = (e) => {
+    e.preventDefault();
     fetch("/updateuser", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -38,8 +39,10 @@ export const Profile = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        alert("User information update succesfully");
-        setUser(data.data);
+        let update = { ...user };
+        update.username = data.data.username;
+        update.email = data.data.email;
+        setUser(update);
       })
       .catch((err) => console.log(err.stack));
   };
@@ -53,37 +56,35 @@ export const Profile = () => {
   return (
     <Wrap>
       <Header>
-        <Title>PROFILE</Title>
+        <Title>Profile</Title>
         <SignOutBtn onClick={SignOut}> SIGN OUT </SignOutBtn>
       </Header>
 
-      <Username>
-        <AccentRed />
-        <SpacerClear />
-        {user?.username}
-      </Username>
-
-      <FormHeader>
-        <EditProfile>EDIT PROFILE</EditProfile>
-      </FormHeader>
-      <Divider />
-      <Message>Ignore password fiels if not to be modified.</Message>
-
       <Form onSubmit={updateUser}>
-        {/* <Label>Username</Label> */}
+        <Username>
+          <Spacer />
+          {user?.username}
+        </Username>
+        <FormHeader>
+          <EditProfile>Update info.</EditProfile>
+        </FormHeader>
+
+        <Message>Ignore password fiels if not to be modified.</Message>
+        <Divider />
+        <Label>Username</Label>
         <Input
           // value={inputValue}
           name="username"
           id="username"
           type="text"
-          placeholder={user.username}
+          placeholder={user?.username}
           autoComplete="Username"
           onChange={(e) => {
             updateData("username", e.target.value);
           }}
         />
 
-        {/* <Label>Email</Label> */}
+        <Label>Email</Label>
         <Input
           // value={inputValue}
           name="email"
@@ -122,54 +123,17 @@ export const Profile = () => {
         />
         <Save type="submit">SAVE CHANGES</Save>
       </Form>
-      <PgTab />
     </Wrap>
   );
 };
 
-const FormHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 90%;
-  /* background-color: aliceblue; */
-`;
-
-const PgTab = styled.div`
-  width: 7.5rem;
-  height: 0.188rem;
-  background-color: #ff130c;
-`;
-
-const Message = styled.div`
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  color: #ff4a45;
-  width: 100%;
-  padding: 0rem 2rem;
-  font-size: 0.8rem;
-  line-height: 1rem;
-`;
-
-const AccentRed = styled.div`
-  background-color: #ff130c;
-  height: 100%;
-  width: 3px;
-`;
-
-const SpacerClear = styled.div`
-  background: none;
-  height: 100%;
-  width: 1rem;
-`;
-
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: flex-start;
-  align-items: center; */
-  background-color: yellow;
+  justify-content: space-between;
+  align-items: flex-end;
+  border: 1px solid #ff130c;
+  background: none;
   width: 100%;
   height: 100%;
 `;
@@ -180,34 +144,12 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 2.5rem;
+  min-height: 3rem;
   color: white;
-  font-size: 1rem;
+  font-size: 3rem;
   font-weight: 600;
   background-color: #ff130c;
   padding: 0rem 1rem;
-`;
-
-const Title = styled.div`
-  font-weight: 900;
-`;
-
-const SignOutBtn = styled.button`
-  /* display: flex; */
-  /* padding: 0.45rem; */
-  /* align-items: center; */
-  border: none;
-  height: 100%;
-  width: 6rem;
-  font-size: 0.75rem;
-  color: black;
-  background: none;
-
-  :hover {
-    cursor: pointer;
-    color: white;
-    background-color: #d7130c;
-  }
 `;
 
 const Username = styled.div`
@@ -230,27 +172,83 @@ const EditProfile = styled.div`
   font-weight: 600;
 `;
 
-const Divider = styled.div`
-  background-color: #ff130c;
-  width: 100%;
-  height: 1px;
-`;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 100%;
+  background: none;
+`;
+
+const FormHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 3rem;
+  padding-left: 2rem;
+  text-transform: uppercase;
+  background: none;
+`;
+
+const Divider = styled.div`
+  width: 100%;
+  height: 1rem;
+`;
+
+const Message = styled.div`
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  color: #ff4a45;
+  width: 100%;
+  padding: 0rem 2rem;
+  font-size: 0.8rem;
+  line-height: 1rem;
+`;
+
+const Spacer = styled.div`
+  background: none;
+  height: 100%;
+  width: 1rem;
+`;
+
+const Title = styled.div`
+  font-size: 1.5rem;
+  font-weight: 300;
+`;
+
+const SignOutBtn = styled.button`
+  /* display: flex; */
+  /* padding: 0.45rem; */
+  /* align-items: center; */
+  border: none;
+  height: 100%;
+  width: 6rem;
+  font-size: 0.75rem;
+  color: black;
+  background: none;
+
+  :hover {
+    cursor: pointer;
+    color: white;
+    background-color: #d7130c;
+  }
 `;
 
 const Label = styled.div`
   align-self: flex-start;
-  color: white;
-  padding: 0.8rem 0rem 0.8rem 1.5rem;
+  font-size: 0.5rem;
+  padding-left: 2rem;
+  margin-top: 0.5rem;
+  color: gray;
 `;
 
 const Input = styled.input`
   background-color: #0f0f0f;
   border: 0rem;
+  border-radius: 0.5rem;
   width: 80%;
   height: 2.5rem;
   padding-left: 1rem;

@@ -3,13 +3,11 @@
 body {
   font-family: "Open Sans", sans-serif;
   font-size: 1rem;
-  color: white;
-  /* background-image: url("./assets/bg_main5.jpg"); */
-  background-position-x: center;
-  background-position-y: center;
+  color: gray;
   background-color: #1a1a1a;
-  background-size: cover;
-  background-repeat: no-repeat;
   padding: 10rem;
   height: 100vh;
+  background: url(../src/assets/bg_main.jps);
+  background-size: cover;
+  background-position: center;
 }

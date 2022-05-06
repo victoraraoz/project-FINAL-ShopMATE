@@ -17,43 +17,63 @@ export const SignIn = () => {
 
   const handleSignIn = (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
 
-    if (formData.value === "" || formData.value == null) {
-      return window.alert("FILL SOMETHING IN!");
-    } else {
-      fetch("/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+    const reqOps = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    };
+    // console.log(reqOps);
+
+    fetch("/signin", reqOps)
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+
+        if (data.status == 201) {
+          console.log(data.data);
+          setUser(data.data);
+          localStorage.setItem("user", JSON.stringify(data.data));
+          history.push("/lists");
+        } else {
+          window.alert(
+            "Something went wrong. Either account found with that email address or possible missing information. Try again"
+          );
+        }
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
+      .catch((err) => {
+        console.log(err.stack);
+      });
+  };
 
-          if (data.status === 201) {
-            console.log(data.data);
-            setUser(data.data);
-            localStorage.setItem("user", JSON.stringify(data.data));
-            history.push("/lists");
-          } else {
-            window.alert(
-              "Opps! Looks like some information is missing. Please try again"
-            );
-          }
-        })
-        .catch((err) => {
-          console.log(err.stack);
-        });
-    }
+  const pswdValidator = (password) => {
+    let re = {
+      capital: /[A-Z]/,
+      digit: /[0-9]/,
+      full: /^[A-Za-z0-9@#%_/ /^/*/$/./-]{7,13}$/,
+    };
+    return (
+      re.capital.test(password) &&
+      re.digit.test(password) &&
+      re.full.test(password)
+    );
   };
 
   return (
     <Wrap>
       <Form
         onSubmit={(e) => {
-          handleSignIn(e);
-          // checkData(formData);
+          if (!formData.email && !formData.password) {
+            window.alert("All fields must be filled");
+          } else if (!formData.email) {
+            window.alert("Please enter an email");
+          } else if (!formData.password) {
+            window.alert("Please fill in the password!!");
+          } else {
+            handleSignIn(e);
+          }
+          console.log(formData);
         }}
       >
         <FormBody>

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { BiCheckSquare } from "react-icons/bi";
-import { BiNote } from "react-icons/bi";
+import { AiOutlineUnorderedList } from "react-icons/ai";
+import { AiOutlineRead } from "react-icons/ai";
 import { BiUser } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
@@ -8,16 +9,20 @@ export const Footer = () => {
   return (
     <Wrap>
       <ListBtn to="/lists">
-        <BiNote size="1.5rem" />
+        <AiOutlineUnorderedList size="1.5rem" />
       </ListBtn>
+
       <Divider />
+
+      <PadBtn to="/notes">
+        <AiOutlineRead size="1.5rem" />
+      </PadBtn>
+
+      <Divider />
+
       <UserBtn to="profile">
         <BiUser size="1.5rem" />
       </UserBtn>
-      <Divider />
-      <DoneBtn to="/done">
-        <BiCheckSquare size="1.5rem" />
-      </DoneBtn>
     </Wrap>
   );
 };
@@ -64,12 +69,14 @@ const UserBtn = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 0rem 0rem 1.5rem 0rem;
   padding: 0 25px 0 25px;
   color: lightgray;
-  background: none;
+
   border: 0;
   height: 100%;
   width: 7.5rem;
+  background: none;
 
   :hover {
     color: #ff130c;
@@ -78,7 +85,7 @@ const UserBtn = styled(Link)`
   }
 `;
 
-const DoneBtn = styled(Link)`
+const PadBtn = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,7 +93,6 @@ const DoneBtn = styled(Link)`
   color: lightgray;
   background: none;
   border: 0;
-  border-radius: 0rem 0rem 1.5rem 0rem;
   height: 100%;
   width: 7.5rem;
 

@@ -5,7 +5,7 @@ export const AppContext = createContext(null);
 export const AppProvider = ({ children }) => {
   const [status, setStatus] = useState(null);
   const [user, setUser] = useState(
-    localStorage.getItem("user")
+    JSON.parse(localStorage.getItem("user"))
       ? JSON.parse(localStorage.getItem("user"))
       : null
   );

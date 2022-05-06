@@ -3,113 +3,144 @@ import { BiUser } from "react-icons/bi";
 import { AiFillUnlock } from "react-icons/ai";
 import { AiTwotoneMail } from "react-icons/ai";
 import { useHistory } from "react-router-dom";
+import { useContext } from "react";
 import { AppContext } from "../AppContext";
-import { useContext, useState } from "react";
+import { useState } from "react";
 // import bg from "../assets/bg_signin.jpg";
 
 export const SignUp = () => {
   const history = useHistory();
-  const { user, username, email, password, setStatus, setUser } =
-    useContext(AppContext);
+  const { user, setUser } = useContext(AppContext);
   const [formData, setFormData] = useState({});
 
   const updateData = (inputField, inputValue) => {
     setFormData({ ...formData, [inputField]: inputValue });
   };
 
-  const Alert = (e) => {
-    if (e.target.value !== 0) {
-      return window.alert("Please fill in the form");
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSignUp = (e) => {
     e.preventDefault();
-    const requestOptions = {
+
+    fetch("/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
-    };
-
-    console.log(requestOptions);
-
-    fetch("/signup", requestOptions)
+    })
       .then((res) => res.json())
       .then((data) => {
-        if (data.message === "Success") {
-          history.push("/lists");
+        if (data.status == 201) {
           setUser(data.data);
+          localStorage.setItem("user", JSON.stringify(data.data));
+          history.push("/thankyou");
+        } else {
+          window.alert("ALERT");
         }
       })
       .catch((err) => console.log(err.stack));
+  };
+
+  const pswCheck = (password) => {
+    let filter = {
+      capital: /[A-Z]/,
+      digit: /[0-9]/,
+      special: /[!@#$%^&*_/-/+=]/,
+      full: /^[A-Za-z0-9!@#/$%/^&/*/./-/+]{8,16}$/,
+    };
+    return (
+      filter.capital.test(password) &&
+      filter.digit.test(password) &&
+      filter.full.test(password)
+    );
   };
 
   return (
     <SignUpWrap>
       <Form
         onSubmit={(e) => {
-          handleSubmit(e);
+          e.preventDefault();
+          if (
+            !formData.username &&
+            !formData.email &&
+            !formData.password &&
+            !formData.confirmpassword
+          ) {
+            window.alert("No input detected!");
+          } else if (!formData.username) {
+            window.alert("We need a username");
+          } else if (formData.username.length < 4) {
+            window.alert("Username must be at least 4 characters!");
+          } else if (!formData.email) {
+            window.alert("Please fill in email");
+          } else if (!formData.password) {
+            window.alert("FILL IN THE PASSWORD!!!");
+          } else if (!formData.confirmpassword) {
+            window.alert("Please fill in the password a second time");
+          } else if (formData.password !== formData.confirmpassword) {
+            window.alert("Passwords must match");
+          } else if (!pswCheck(formData.password)) {
+            window.alert(
+              "Passwords must be between 8 and 16 characters and contain a capital letter, a numer and a special character e.g."
+            );
+          } else {
+            handleSignUp(e);
+          }
         }}
       >
-        <FormBody>
-          <Title>Sign Up</Title>
-          <InputSection>
-            <BiUser />
-            <Input
-              id="username"
-              name="username"
-              type="username"
-              autoCapitalize="Username"
-              placeholder="Username"
-              onChange={(e) => {
-                updateData("username", e.target.value);
-              }}
-            />
-          </InputSection>
-          <Divider />
-          <InputSection>
-            <AiTwotoneMail />
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              autoCapitalize="Email"
-              placeholder="Enter a valid email"
-              onChange={(e) => {
-                updateData("email", e.target.value);
-              }}
-            />
-          </InputSection>
-          <Divider />
-          <InputSection>
-            <AiFillUnlock />
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Password"
-              autoComplete="Password"
-              onChange={(e) => {
-                updateData("password", e.target.value);
-              }}
-            />
-          </InputSection>
-          <Divider />
-          <InputSection>
-            <AiFillUnlock />
-            <Input
-              name="confirmPassword"
-              type="password"
-              placeholder="Confirm password"
-              autoComplete="Confirm password"
-              onChange={(e) => {
-                updateData("confirmPassword", e.target.value);
-              }}
-            />
-          </InputSection>
+        <Title>Sign Up</Title>
 
-          <SignUpBtn type="submit">SIGN UP</SignUpBtn>
-        </FormBody>
+        <InputSection>
+          <BiUser />
+          <Input
+            name="username"
+            type="text"
+            autoCapitalize="Username"
+            placeholder="elonboy"
+            onChange={(e) => {
+              updateData("username", e.target.value);
+            }}
+          />
+        </InputSection>
+        <Divider />
+        <InputSection>
+          <AiTwotoneMail />
+          <Input
+            name="email"
+            type="email"
+            autoComplete="email"
+            placeholder="elon@me.com"
+            onChange={(e) => {
+              updateData("email", e.target.value);
+            }}
+          />
+        </InputSection>
+        <Divider />
+        <InputSection>
+          <AiFillUnlock />
+          <Input
+            name="password"
+            type="password"
+            placeholder="Password"
+            autoComplete="Psw"
+            onChange={(e) => {
+              updateData("password", e.target.value);
+            }}
+          />
+        </InputSection>
+        <Divider />
+        <InputSection>
+          <AiFillUnlock />
+          <Input
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm password"
+            autoComplete="Confirm"
+            onChange={(e) => {
+              updateData("confirmPassword", e.target.value);
+            }}
+          />
+        </InputSection>
+
+        <SignUpBtn type="submit">SIGN UP</SignUpBtn>
+
         {""}
         <Footer>
           Already a member?{" "}
@@ -134,25 +165,6 @@ const SignUpWrap = styled.div`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 2rem;
-  width: 20rem;
-  width: 90%;
-  border-radius: 1rem;
-`;
-
-const FormBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  h1 {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 2.25rem;
-    font-size: 2rem;
-    font-weight: 300;
-    color: black;
-  }
 `;
 
 const Title = styled.div`
@@ -164,14 +176,6 @@ const Title = styled.div`
   color: whitesmoke;
 `;
 
-const Label = styled.div`
-  align-self: flex-start;
-  margin-bottom: 0.35rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: black;
-`;
-
 const InputSection = styled.div`
   display: flex;
   flex-direction: row;
@@ -181,7 +185,7 @@ const InputSection = styled.div`
 
 const Input = styled.input`
   background-color: #28292c;
-  width: 12.5rem;
+  width: 15rem;
   height: 2rem;
   padding-left: 1rem;
   margin-left: 1rem;
@@ -189,16 +193,18 @@ const Input = styled.input`
   border-radius: 1rem;
   color: darkgray;
   font-family: "Open Sans", sans-serif;
+
   :hover {
     /* border: 1px solid #ff130c; */
   }
 
   ::placeholder {
-    color: lightgray;
+    color: gray;
     opacity: 0.5;
   }
   :focus {
-    border: 1px solid #28292c;
+    border: 0px solid gray;
+    outline: 0px;
   }
 `;
 
@@ -226,10 +232,6 @@ const SignUpBtn = styled.button`
     color: white;
     cursor: pointer;
   }
-`;
-
-const Button = styled.button`
-  background: none;
 `;
 
 const Footer = styled.div`
