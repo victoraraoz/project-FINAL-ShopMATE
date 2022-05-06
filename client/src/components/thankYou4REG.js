@@ -8,9 +8,9 @@ export const ThankYou = () => {
   // const { user } = localStorage.getItem("user");
   const history = useHistory();
 
-  // setTimeout(() => {
-  //   history.push("/");
-  // }, 5000);
+  setTimeout(() => {
+    history.push("/");
+  }, 5000);
 
   // const Timer = () => {
   //   const {initialSeconds = 5} = props;
@@ -38,7 +38,7 @@ export const ThankYou = () => {
       <AiFillCheckCircle size="3rem" color="green" />
       <Spacer />
       <div> Success!</div> <p>Thanks for registering!</p> You're being
-      redirected to the sign-in page, in 2 seconds!
+      redirected to the sign-in page.
     </Wrap>
   );
 };
