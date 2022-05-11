@@ -231,7 +231,7 @@ const BTN_signin = styled.button`
   font-weight: 700;
 
   :hover {
-    background-color: #ff130c;
+    background-color: #1f1f1f;
     color: whitesmoke;
     cursor: pointer;
   }
