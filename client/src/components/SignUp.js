@@ -27,7 +27,7 @@ export const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status == 201) {
+        if (data.status === 201) {
           setUser(data.data);
           localStorage.setItem("user", JSON.stringify(data.data));
           history.push("/thankyou");
@@ -67,11 +67,11 @@ export const SignUp = () => {
           } else if (!formData.username) {
             window.alert("We need a username");
           } else if (formData.username.length < 4) {
-            window.alert("Username must be at least 4 characters!");
+            window.alert("Username must be at least 4 characters");
           } else if (!formData.email) {
             window.alert("Please fill in email");
           } else if (!formData.password) {
-            window.alert("FILL IN THE PASSWORD!!!");
+            window.alert("Please fill in the password");
           } else if (!formData.confirmpassword) {
             window.alert("Please fill in the password a second time");
           } else if (formData.password !== formData.confirmpassword) {
@@ -157,14 +157,19 @@ const SignUpWrap = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: black;
   border-radius: 0rem 0rem 1.5rem 1.5rem;
+  /* background-color: aqua; */
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: blanchedalmond; */
+  width: 85%;
 `;
 
 const Title = styled.div`
@@ -180,13 +185,16 @@ const InputSection = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   align-self: flex-start;
+  width: 100%;
+  /* background-color: blueviolet; */
 `;
 
 const Input = styled.input`
   background-color: #28292c;
-  width: 15rem;
-  height: 2rem;
+  width: 100%;
+  height: 2.25rem;
   padding-left: 1rem;
   margin-left: 1rem;
   border: 0px solid white;

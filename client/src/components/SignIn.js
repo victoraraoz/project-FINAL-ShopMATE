@@ -29,35 +29,21 @@ export const SignIn = () => {
     fetch("/signin", reqOps)
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
-
-        if (data.status == 201) {
+        if (data.status === 201) {
           console.log(data.data);
           setUser(data.data);
           localStorage.setItem("user", JSON.stringify(data.data));
           history.push("/lists");
         } else {
+          console.log(err.stack);
           window.alert(
-            "Something went wrong. Either account found with that email address or possible missing information. Try again"
+            "Something went wrong. Either account not found or possible missing information. Try again"
           );
         }
       })
       .catch((err) => {
         console.log(err.stack);
       });
-  };
-
-  const pswdValidator = (password) => {
-    let re = {
-      capital: /[A-Z]/,
-      digit: /[0-9]/,
-      full: /^[A-Za-z0-9@#%_/ /^/*/$/./-]{7,13}$/,
-    };
-    return (
-      re.capital.test(password) &&
-      re.digit.test(password) &&
-      re.full.test(password)
-    );
   };
 
   return (
@@ -110,7 +96,7 @@ export const SignIn = () => {
           />
         </InputSection>
 
-        <BTN_signin>SIGN IN</BTN_signin>
+        <SignInBtn>SIGN IN</SignInBtn>
 
         <Error>Invalid username or password</Error>
       </Form>
@@ -194,7 +180,6 @@ const InputSection = styled.div`
 `;
 
 const Input = styled.input`
-  /* background: #28292c; */
   width: 100%;
   height: 2.25rem;
   padding-left: 1rem;
@@ -202,6 +187,7 @@ const Input = styled.input`
   border: 0px;
   border-radius: 1rem;
   color: gray;
+  background: #28292c;
 
   ::placeholder {
     color: gray;
@@ -218,7 +204,7 @@ const Divider = styled.div`
   height: 1rem;
 `;
 
-const BTN_signin = styled.button`
+const SignInBtn = styled.button`
   background: #0f0f0f;
   margin: 1rem 0rem;
   width: 100%;

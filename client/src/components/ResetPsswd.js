@@ -39,7 +39,7 @@ export const ResetPsswd = () => {
           <TheShameLane to="/signup">
             Forgot email? Get a New Account! It's free!
           </TheShameLane>
-          <StartOver to="/">Start Over</StartOver>
+          <StartOver to="/">Start Over, Sign In.</StartOver>
         </Footer>
         {""}
       </Form>
